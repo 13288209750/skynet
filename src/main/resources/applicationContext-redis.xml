@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 定义受环境影响易变的变量 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	<property name="ignoreResourceNotFound" value="true" />
+	<property name="ignoreUnresolvablePlaceholders" value="true" />
+	<property name="locations">
+		<list>
+			<value>classpath:redis-config.properties</value>
+		</list>
+	</property>
+</bean>
+	<!-- 公共POOL配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="1024" />
+        <property name="maxIdle" value="10" /><!-- 最大空闲连接数, 默认8个 -->
+        <property name="maxWaitMillis" value="5000"/><!-- 获取连接时的最大等待毫秒数 -->
+	    <property name="testOnBorrow" value="true" /><!-- 在获取连接的时候检查有效性, 默认false -->
+	    <property name="testWhileIdle" value="false"/><!-- 空闲是否检查是否有效，默认为false -->
+	    <property name="testOnReturn" value="true"/>
+    </bean>
+	
+	
+    <!-- jedis shard信息配置 -->
+    <bean id="jedisShardInfo" class="redis.clients.jedis.JedisShardInfo">
+     	<constructor-arg index="0" value="${redis.ip}" />
+        <constructor-arg index="1" value="${redis.port}" type="int"/> 
+     	<property name="password" value="${redis.password}" />
+    </bean>
+
+    <!-- jedis shard pool配置，提供给程序注入使用 -->
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1">
+            <list>
+                <ref bean="jedisShardInfo" />
+            </list>
+        </constructor-arg>
+    </bean>
+	
+</beans>
