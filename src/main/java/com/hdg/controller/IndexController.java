@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by huangxiaojun on 2017/7/8.
+ * Created by BlueBuff on 2017/7/8.
  */
 @Controller
 @RequestMapping(value = {"/index"})
