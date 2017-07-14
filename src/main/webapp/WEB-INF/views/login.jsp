@@ -76,7 +76,7 @@
                             <!--下面是密码输入框-->
                             <div class="input-group has-success has-feedback">
                                 <span class="input-group-addon" id="basic-addon2">K</span>
-                                <input id="passWord" type="text" class="form-control" name="password" placeholder="密码" aria-describedby="basic-addon1">
+                                <input id="password" type="password" class="form-control" name="password" placeholder="密码" aria-describedby="basic-addon1">
                             </div>
                             <br>
                             <!--下面是登陆按钮,包括颜色控制-->

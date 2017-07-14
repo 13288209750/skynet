@@ -5,6 +5,8 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <context:annotation-config />
+
     <!-- 扫描com.hdg.dao包下所有标注@Repository的DAO组件 -->
     <context:component-scan base-package="com.hdg.dao"/>
     <!-- 扫描com.hdg.service包下所有标注@Service的服务组件 -->

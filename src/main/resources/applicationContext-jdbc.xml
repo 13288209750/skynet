@@ -39,13 +39,13 @@
     <!-- jdbcTemplate注入 -->
     <bean id="jdbcTemplateWrite" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource">
-            <ref bean="dataSourceWrite"/>
+            <ref bean="dataSourceWrite"></ref>
         </property>
     </bean>
     <!-- jdbcTemplate读注入 -->
     <bean id="jdbcTemplateRead" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource">
-            <ref bean="dataSourceRead"/>
+            <ref bean="dataSourceRead"></ref>
         </property>
     </bean>
 </beans>

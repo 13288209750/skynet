@@ -2,7 +2,9 @@ package com.hdg.dao;
 
 import com.hdg.entity.QueryResult;
 import com.hdg.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,8 +12,9 @@ import java.util.List;
 /**
  * Created by BlueBuff on 2017/7/10.
  */
-@Repository
+@Repository("userDao")
 public class UserDao extends BaseJdbcDao{
+
 
     public QueryResult<List<User>> selUser(User user) {
         String sql="select * from t_user t where t.userName =? and t.`password`=?";
