@@ -21,4 +21,10 @@ public class IndexController {
         }
         return "login";
     }
+
+    @RequestMapping(value = "/toregister")
+    public String toRegister(){
+
+        return "register";
+    }
 }

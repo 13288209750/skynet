@@ -7,6 +7,8 @@ import com.hdg.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by BlueBuff on 2017/7/10.
  */
@@ -18,10 +20,10 @@ public class UserService {
 
     public ExecuteResult<User> getUser(User user) {
         ExecuteResult<User> executeResult=new ExecuteResult<User>(ExecuteResult.FAILED,ExecuteResult.DEFAULT_MSG);
-        QueryResult<User> userQueryResult=userDao.selUser(user);
+        QueryResult<List<User>> userQueryResult=userDao.selUser(user);
         if(userQueryResult.getCount()!=0){
             executeResult.setCode(ExecuteResult.SUCCESS);
-            executeResult.setObj(userQueryResult.getDataList().get(0));
+            executeResult.setObj(userQueryResult.getData().get(0));
         }
         return executeResult;
     }

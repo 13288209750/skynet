@@ -13,13 +13,13 @@ import java.util.List;
 @Repository
 public class UserDao extends BaseJdbcDao{
 
-    public QueryResult<User> selUser(User user) {
+    public QueryResult<List<User>> selUser(User user) {
         String sql="select * from t_user t where t.userName =? and t.`password`=?";
         Object[] obj=new Object[]{user.getUserName(),user.getPassword()};
         List<User> userList=jdbcTemplateRead.query(sql,obj, BeanPropertyRowMapper.newInstance(User.class));
         QueryResult queryResult=new QueryResult();
         queryResult.setCount(userList.size());
-        queryResult.setDataList(userList);
+        queryResult.setData(userList);
         return queryResult;
     }
 }

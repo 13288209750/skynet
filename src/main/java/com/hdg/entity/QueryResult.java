@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class QueryResult<T> {
     private Integer count;
-    private List<T> dataList;
+    private T data;
 
     public QueryResult() {
     }
@@ -20,19 +20,19 @@ public class QueryResult<T> {
         this.count = count;
     }
 
-    public List<T> getDataList() {
-        return dataList;
+    public T getData() {
+        return data;
     }
 
-    public void setDataList(List<T> dataList) {
-        this.dataList = dataList;
+    public void setData(T data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
         return "QueryResult{" +
                 "count=" + count +
-                ", dataList=" + dataList +
+                ", data=" + data +
                 '}';
     }
 }
