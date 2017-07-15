@@ -32,7 +32,7 @@ public class SerializbleByJson implements ISerializableUtil{
     }
 
     @Override
-    public <E> Collection<E> parseToGather(String string, Class<T> cls) {
+    public <E> Collection<E> parseToGather(String string, Class<?> cls) {
         JSONArray jsonArray=JSONArray.fromObject(string);
         Collection<E> collection=JSONArray.toCollection(jsonArray,cls);
         return collection;
