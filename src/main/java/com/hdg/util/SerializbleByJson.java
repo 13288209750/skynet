@@ -3,6 +3,7 @@ package com.hdg.util;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
