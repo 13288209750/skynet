@@ -27,4 +27,8 @@
     <bean id="serializbleByJson" class="com.hdg.util.SerializbleByJson"></bean>
     <!--序列化工具类serializableByStream-->
     <bean id="serializableByStream" class="com.hdg.util.SerializableByStream"></bean>
+    <!--ip工具类-->
+    <bean id="ipAddress" class="com.hdg.util.IpAddressUtil">
+        <property name="basicService" ref="basicService"></property>
+    </bean>
 </beans>

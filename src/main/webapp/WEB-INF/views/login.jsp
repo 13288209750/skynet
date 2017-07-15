@@ -11,10 +11,15 @@
 <head>
     <title>天网登录系统</title>
     <link rel="stylesheet" href="/statics/bootstrap/css/bootstrap.min.css" type="text/css"/>
-    <script src="/statics/js/jquery-3.1.1.min.js"></script>
+    <script src="/statics/js/jquery-3.1.1.min.js" />
     <script src="/statics/bootstrap/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script>
+        $(function () {
+            alert($);
+        })
+    </script>
     <style>
 
         .container{
