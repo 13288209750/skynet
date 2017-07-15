@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<allow-url>
+    <urls>
+        <url>/index/tologin</url>
+        <url>/index/toregister</url>
+    </urls>
+</allow-url>

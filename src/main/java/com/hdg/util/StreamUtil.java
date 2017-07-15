@@ -11,7 +11,9 @@ public class StreamUtil {
     public static void closeStream(Closeable ...closeables) throws IOException {
         if(closeables!=null){
             for(Closeable c:closeables){
-                c.close();
+                if (c!=null){
+                    c.close();
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ import com.hdg.entity.Result;
 import com.hdg.other.Constant;
 import com.hdg.util.AspectSupportAdapter;
 import com.hdg.util.AspectTemplateUtil;
+import com.hdg.util.ConfigUtil;
 import com.hdg.util.IpAddressUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -48,7 +49,8 @@ public class IpVerificationAspect {
 
     @Around("ipVerificationPoint()")
     public Object checkIp(ProceedingJoinPoint joinPoint) throws Throwable {
-        String userName = request.getParameter(Constant.USER_NAME);
+        String adminCfgName= ConfigUtil.getConfigInfo("ADMIN_NAME");
+        String userName = request.getParameter(adminCfgName);
         if (StringUtils.isBlank(userName)) {
             String address = ipAddressUtil.getIpAddress(request);
             IpAddress ipAddress = new IpAddress();
