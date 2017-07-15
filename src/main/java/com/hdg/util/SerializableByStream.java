@@ -2,15 +2,13 @@ package com.hdg.util;
 
 import com.hdg.exception.SerializableFormatException;
 import com.hdg.exception.SerializableParseException;
-import com.sun.deploy.net.URLEncoder;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.Collection;
-import java.util.Map;
 
 /**
- * Created by 黄孝君 on 2017/7/15.
+ * Created by BlueBuff on 2017/7/15.
  */
 public class SerializableByStream implements ISerializableUtil{
 
@@ -26,9 +24,9 @@ public class SerializableByStream implements ISerializableUtil{
             oos=new ObjectOutputStream(bos);
             oos.writeObject(obj);
             //以ISO-8859-1编码成字符串
-            result=bos.toString(TEMP_ENCODING);
+            byte[] data=bos.toByteArray();
             //将字符串进行编码（不编码也可以，只是不编码会有很多无法打印的字符串）
-            result= URLEncoder.encode(result,DEFAULT_ENCODING);
+            result=new String(data,TEMP_ENCODING);
         } catch (IOException e) {
             e.printStackTrace();
             throw new SerializableFormatException(e.getMessage(),e);
@@ -49,9 +47,7 @@ public class SerializableByStream implements ISerializableUtil{
         ObjectInputStream ois=null;
         ByteArrayInputStream bis=null;
         try {
-            //解码
-            String temp= URLDecoder.decode(string,DEFAULT_ENCODING);
-            bis=new ByteArrayInputStream(temp.getBytes(TEMP_ENCODING));
+            bis=new ByteArrayInputStream(string.getBytes(TEMP_ENCODING));
             ois=new ObjectInputStream(bis);
             t=cls.cast(ois.readObject());
         } catch (IOException e) {

@@ -17,4 +17,14 @@
     <!-- 指定自动搜索Bean组件，自动搜索切面类 -->
     <context:component-scan base-package="com.hdg.aspect"/>
 
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+    <!--序列化工具类SerializableByMapper-->
+    <bean id="serializableByMapper" class="com.hdg.util.SerializableByMapper">
+        <property name="objectMapper" ref="objectMapper"></property>
+        <property name="serializationInclusion" value="NON_EMPTY"></property>
+    </bean>
+    <!--序列化工具类serializbleByJson-->
+    <bean id="serializbleByJson" class="com.hdg.util.SerializbleByJson"></bean>
+    <!--序列化工具类serializableByStream-->
+    <bean id="serializableByStream" class="com.hdg.util.SerializableByStream"></bean>
 </beans>
