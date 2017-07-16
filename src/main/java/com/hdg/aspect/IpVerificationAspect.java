@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
+ * 这个切面主要是拦截非管理员访问一些接口信息，如果不是管理员，必须是授权的IP地址才能够通过拦截，否则返回403错误
  * Created by BlueBuff on 2017/7/15.
  */
 @Aspect

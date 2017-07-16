@@ -62,7 +62,6 @@ public class SqlUtil {
                 stringBuffer.append(" , ");
             }
         }
-        System.out.println(stringBuffer);
         return obj;
     }
 

@@ -46,8 +46,8 @@ public class ConfigUtil {
             }else {
                 Set<Map.Entry<Object,Object>> entries=properties.entrySet();
                 for(Map.Entry<Object,Object> entry : entries){
-                    String key=entry.getKey().toString();
-                    String value=entry.getValue().toString();
+                    String key=entry.getKey().toString().trim();
+                    String value=entry.getValue().toString().trim();
                     configMap.put(key,value);
                 }
             }
