@@ -39,6 +39,12 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        /***当项目是以开发者模式启动，全部放行,否则，按生产模式执行***/
+        if("true".equals(ConfigUtil.getConfigInfo("DEVELOPER"))){
+            //全部放行
+            filterChain.doFilter(request,response);
+            return;
+        }
         String requestURI = request.getRequestURI();
         requestURI = URLDecoder.decode(requestURI, "utf-8");
         if (logger.isInfoEnabled()) {

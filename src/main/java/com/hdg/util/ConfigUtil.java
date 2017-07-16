@@ -88,6 +88,20 @@ public class ConfigUtil {
                 e.printStackTrace();
             }
         }
+        /**启动模式**/
+        if("true".equals(getConfigInfo("DEVELOPER"))){
+            if(logger.isInfoEnabled()){
+                logger.info("当前项目启动模式---【开发模式】");
+            }
+        }else if("false".equals(getConfigInfo("DEVELOPER"))){
+            if(logger.isInfoEnabled()){
+                logger.info("当前项目启动模式---【生产模式】");
+            }
+        }else {
+            if(logger.isInfoEnabled()){
+                logger.info("模式配置错误!!!-->\""+getConfigInfo("DEVELOPER")+"\"<---【默认生产模式】");
+            }
+        }
     }
 
     public static String getConfigInfo(String keyName){
