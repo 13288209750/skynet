@@ -69,7 +69,11 @@ public class UserService {
                 user = userQueryResult.getData().get(0);
                 String address = ipAddressUtil.getIpAddress(request);
                 String onlineAddress=user.getOnlineAddress();
-                if (!codePass && StringUtils.isNotBlank(onlineAddress) && !(onlineAddress.trim().equals(address))) {
+                if (!codePass && StringUtils.isBlank(onlineAddress)) {
+                    executeResult.setCode(100);
+                    executeResult.setMsg("由于您是首次登录，请输入验证码");
+                    session.setAttribute(ConfigUtil.getConfigInfo("SHOW_CODE"),true);
+                }else if(!codePass && StringUtils.isNotBlank(onlineAddress) && !(onlineAddress.trim().equals(address))){
                     executeResult.setCode(100);
                     executeResult.setMsg("由于您本次登录地点与上次不一样，请输入验证码");
                     session.setAttribute(ConfigUtil.getConfigInfo("SHOW_CODE"),true);
