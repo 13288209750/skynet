@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <allow-url>
     <urls>
+        <url>/</url>
         <url>/index/tologin</url>
         <url>/index/toregister</url>
+        <url>/login/tohome</url>
+        <url>/basic/getImgCode</url>
     </urls>
 </allow-url>

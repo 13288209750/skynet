@@ -7,10 +7,6 @@ import org.apache.poi.ss.formula.functions.T;
  */
 public class ExecuteResult<T> {
 
-    public static final int SUCCESS=200;
-    public static final int FAILED=-1;
-    public static final String DEFAULT_MSG="";
-
     private Integer code;
     private T obj;
     private String msg;

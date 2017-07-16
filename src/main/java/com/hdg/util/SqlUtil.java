@@ -4,12 +4,15 @@ import com.hdg.entity.PageParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by BlueBuff on 2017/7/14.
  */
 public class SqlUtil {
 
-    private static final Logger logger= LoggerFactory.getLogger(SqlUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(SqlUtil.class);
 
     private SqlUtil() {
 
@@ -22,8 +25,8 @@ public class SqlUtil {
      * @param pageParam
      */
     public static void appendPageSqlSupport(StringBuffer stringBuffer, PageParam pageParam) {
-        if(logger.isInfoEnabled()){
-            logger.info("pageParam{}",pageParam);
+        if (logger.isInfoEnabled()) {
+            logger.info("pageParam{}", pageParam);
         }
         if (stringBuffer != null && pageParam != null && (pageParam.getIgnore() == null || pageParam.getIgnore() == false)) {
             int pageNo = pageParam.getPageNo() == null ? 0 : pageParam.getPageNo();
@@ -32,5 +35,58 @@ public class SqlUtil {
                 stringBuffer.append(" LIMIT ").append((pageNo - 1) * pageSize).append(',').append(pageSize);
             }
         }
+    }
+
+    public static Object[] appendUpdateSqlSupport(StringBuffer stringBuffer, Map<String, Object> setMap,boolean isSet) {
+        if (stringBuffer == null || setMap == null || setMap.isEmpty()) {
+            return new Object[]{};
+        }
+        if(isSet){
+            //外面没有提供set
+            stringBuffer.append(" set ");
+        }else {
+            //外面已经提供了set
+            stringBuffer.append(" , ");
+        }
+        Set<Map.Entry<String, Object>> set = setMap.entrySet();
+        Object[] obj=new Object[setMap.size()];
+        int i = 0;
+        for (Map.Entry<String, Object> entry : set) {
+            String keyName = entry.getKey();
+            Object objVal = entry.getValue();
+            stringBuffer.append(keyName);
+            stringBuffer.append(" = ");
+            stringBuffer.append(" ? ");
+            obj[i]=objVal;
+            if (i++ != setMap.size() - 1) {
+                stringBuffer.append(" , ");
+            }
+        }
+        System.out.println(stringBuffer);
+        return obj;
+    }
+
+    public static Object[] appendQueryParamSqlSupport(StringBuffer stringBuffer, Map<String, Object> paramMap, boolean isWhere) {
+        if (paramMap == null || stringBuffer == null || paramMap.isEmpty()) {
+            return new Object[]{};
+        }
+        Set<Map.Entry<String, Object>> set = paramMap.entrySet();
+        Object[] obj = new Object[paramMap.size()];
+        int index = 0;
+        if (isWhere) {
+            stringBuffer.append(" where ");
+        }
+        for (Map.Entry<String, Object> entry : set) {
+            String paramName = entry.getKey();
+            if (index != 0) {
+                stringBuffer.append(" and ");
+            }
+            stringBuffer.append(paramName);
+            stringBuffer.append(" = ");
+            stringBuffer.append(" ? ");
+            Object value = entry.getValue();
+            obj[index++] = value;
+        }
+        return obj;
     }
 }

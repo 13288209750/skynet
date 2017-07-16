@@ -22,6 +22,8 @@ public class Constant {
      **/
     public static final int REFUSE = 403;
 
+    public static final String DEFAULT_MSG="";
+
     /**
      * 配置文件路径
      **/

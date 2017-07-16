@@ -1,16 +1,17 @@
 package com.hdg.util;
 
+import com.hdg.filter.LoginFilter;
 import com.hdg.other.Constant;
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 项目的配置信息
@@ -19,11 +20,14 @@ import java.util.Set;
 public class ConfigUtil {
     //配置信息容器
     private static final Map<String,String> configMap;
+    //免登录资源容器
+    private static final Set<String> urlSet;
 
     private static Logger logger= LoggerFactory.getLogger(ConfigUtil.class);
 
     static {
         configMap=new HashMap<>();
+        urlSet = new HashSet<>();
         init();
     }
 
@@ -32,9 +36,9 @@ public class ConfigUtil {
             logger.info("加载配置文件信息");
         }
         Properties properties=new Properties();
-        InputStream inputStream=ConfigUtil.class.getClassLoader().getResourceAsStream(Constant.CONFIG_PATH);
+        InputStream inputStream1=ConfigUtil.class.getClassLoader().getResourceAsStream(Constant.CONFIG_PATH);
         try {
-            properties.load(inputStream);
+            properties.load(inputStream1);
             if(properties.isEmpty()){
                 if(logger.isWarnEnabled()){
                     logger.warn("配置（config.properties）文件是空的");
@@ -54,13 +58,35 @@ public class ConfigUtil {
             }
         }finally {
             try {
-                StreamUtil.closeStream(inputStream);
+                StreamUtil.closeStream(inputStream1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if(logger.isInfoEnabled()){
             logger.info("配置文件加载完毕!!!\t配置项,size:[{}]",configMap.size());
+        }
+        /**####################################################################**/
+        String allowFilePath = ConfigUtil.getConfigInfo("ALLOW_URL");
+        InputStream inputStream2 = LoginFilter.class.getClassLoader().getResourceAsStream(allowFilePath);
+        Document document = null;
+        try {
+            document = XMLUtil.getDocument(inputStream2);
+            List<Element> elements = document.getRootElement().element("urls").elements();
+            String url = null;
+            for (int i = 0, len = elements.size(); i < len; i++) {
+                Element element = elements.get(i);
+                url = element.getTextTrim();
+                urlSet.add(url);
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                StreamUtil.closeStream(inputStream2);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -70,5 +96,28 @@ public class ConfigUtil {
             value="";
         }
         return value;
+    }
+
+    public static int getUrlSetSize(){
+        return urlSet.size();
+    }
+
+
+    public static boolean isIgnoreUrl(String requestUrl) {
+        Iterator<String> iterator = urlSet.iterator();
+        String url = null;
+        if ("/".equals(requestUrl)) {
+            return true;
+        }
+        while (iterator.hasNext()) {
+            url = iterator.next();
+            if ("/".equals(url)) {
+                continue;
+            }
+            if (requestUrl != null && requestUrl.startsWith(url)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

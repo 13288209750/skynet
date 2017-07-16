@@ -27,4 +27,10 @@ public class IndexController {
 
         return "register";
     }
+
+    @RequestMapping(value = "tohome")
+    public String toHome(){
+
+        return "home";
+    }
 }

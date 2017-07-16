@@ -1,14 +1,21 @@
 package com.hdg.controller;
 
 import com.hdg.entity.ExecuteResult;
+import com.hdg.entity.Result;
 import com.hdg.entity.User;
+import com.hdg.other.Constant;
 import com.hdg.service.UserService;
+import com.hdg.util.ConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by BlueBuff on 2017/7/8.
@@ -25,16 +32,15 @@ public class LoginController {
     /**
      * 登录
      * @param user
-     * @param model
      * @return
      */
     @RequestMapping(value = "/tohome")
-    public String toLogin(User user, Model model){
+    @ResponseBody
+    public Result toLogin(User user,String code, HttpServletRequest request){
         if(logger.isInfoEnabled()){
             logger.info("进入登录{}",user);
         }
-        ExecuteResult<User> executeResult=userService.getUser(user);
-        model.addAttribute("user",executeResult.getObj());
-        return "home";
+        ExecuteResult<User> executeResult=userService.getUser(user,request,code);
+        return new Result(executeResult.getCode(),null,executeResult.getMsg());
     }
 }

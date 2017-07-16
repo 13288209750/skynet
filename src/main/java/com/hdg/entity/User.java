@@ -14,6 +14,9 @@ public class User implements Serializable{
     private String sex;
     private Long phone;
     private Boolean status;
+    private String name;
+
+    private String onlineAddress;
 
     public User() {
     }
@@ -66,6 +69,22 @@ public class User implements Serializable{
         this.status = status;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOnlineAddress() {
+        return onlineAddress;
+    }
+
+    public void setOnlineAddress(String onlineAddress) {
+        this.onlineAddress = onlineAddress;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,6 +94,8 @@ public class User implements Serializable{
                 ", sex='" + sex + '\'' +
                 ", phone=" + phone +
                 ", status=" + status +
+                ", name='" + name + '\'' +
+                ", onlineAddress='" + onlineAddress + '\'' +
                 '}';
     }
 }
