@@ -10,6 +10,8 @@ import com.hdg.annotation.IpAspectAnnotation;
 import com.hdg.entity.*;
 import com.hdg.service.BasicService;
 import com.hdg.util.ConfigUtil;
+import com.hdg.util.ExcelCreateArtifactSupport;
+import com.hdg.util.IExcelCreateArtifact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +47,37 @@ public class BasicController {
         }
         ExecuteResult<QueryResult<List<IpAddress>>> executeResult=basicService.queryIpAddress(pageParam);
         return new Result(executeResult.getCode(),executeResult.getObj(),executeResult.getMsg());
+    }
+
+    @RequestMapping(value = "/export")
+    public String exportExcelIp(PageParam pageParam,HttpServletResponse response) throws IOException {
+        pageParam.setIgnore(true);
+        ExecuteResult<QueryResult<List<IpAddress>>> executeResult=basicService.queryIpAddress(pageParam);
+        List<IpAddress> ipAddresses=executeResult.getObj().getData();
+        response.setContentType("application/force-download");// 设置强制下载不打开
+        response.addHeader("Content-Disposition", "attachment;fileName=" +"test.xlsx");// 设置文件名
+        IExcelCreateArtifact<IpAddress> iExcelCreateArtifact= new ExcelCreateArtifactSupport<IpAddress>() {
+            @Override
+            public void setHead(List<String> headList) {
+                headList.add("标题1");
+                headList.add("标题2");
+                headList.add("标题3");
+                headList.add("标题4");
+            }
+
+            @Override
+            public void setCellValue(IpAddress ipAddress, List<Object> list) {
+                list.add(ipAddress.getAddress());
+                list.add(ipAddress.getHostName());
+                list.add(ipAddress.getId());
+                list.add(ipAddress.getStatus());
+            }
+
+
+        };
+        OutputStream os = response.getOutputStream();
+        iExcelCreateArtifact.createExcelFile(ipAddresses,os);
+        return null;
     }
 
     /**

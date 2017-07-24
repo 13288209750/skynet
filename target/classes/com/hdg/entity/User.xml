@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hdg.dao.UserDao">
+
+    <select id="selUser" resultType="User" parameterType="User">
+        select * from t_user
+        <where>
+            <if test="userName != null" >
+                userName = #{userName}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+        </where>
+    </select>
+
+    <update id="modifyUser" parameterType="User">
+        update t_user
+        <set>
+            updatetime = now(),
+            <if test="userName != null">
+                userName = #{userName},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="onlineAddress != null">
+                onlineaddress = #{onlineAddress}
+            </if>
+        </set>
+         WHERE t_user.uid = #{uid}
+    </update>
+</mapper>

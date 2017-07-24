@@ -59,17 +59,16 @@ public class UserService {
         //创建临时的用户，用于查询用户名是否存在
         User temp = new User();
         temp.setUserName(user.getUserName());
-        QueryResult<List<User>> userQueryResult = userDao.selUser(temp);
-        if (userQueryResult.getCount() != 0) {
+        List<User> users = userDao.selUser(temp);
+        if (users !=null || !users.isEmpty() ) {
             //如果用户名存在，检查密码是否正确
-            userQueryResult = userDao.selUser(user);
-            if (userQueryResult.getCount() != 0) {
+            temp = users.get(0);
+            if (temp.getUserName().equals(user.getUserName()) && temp.getPassword().equals(user.getPassword())) {
                 //密码正确
                 executeResult.setCode(Constant.SUCCESS);
                 executeResult.setMsg("success");
-                user = userQueryResult.getData().get(0);
                 String address = ipAddressUtil.getIpAddress(request);
-                String onlineAddress=user.getOnlineAddress();
+                String onlineAddress=temp.getOnlineAddress();
                 if (!codePass && StringUtils.isBlank(onlineAddress)) {
                     executeResult.setCode(100);
                     executeResult.setMsg("由于您是首次登录，请输入验证码");
@@ -97,7 +96,7 @@ public class UserService {
                         //移除属性
                         session.removeAttribute(ConfigUtil.getConfigInfo("SHOW_CODE"));
                     }
-                    session.setAttribute(ConfigUtil.getConfigInfo("ADMIN_NAME"), user);
+                    session.setAttribute(ConfigUtil.getConfigInfo("ADMIN_NAME"), temp);
                     executeResult.setObj(user);
                 }
             } else {

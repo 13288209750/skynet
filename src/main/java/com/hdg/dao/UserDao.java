@@ -1,65 +1,35 @@
 package com.hdg.dao;
 
-import com.hdg.entity.QueryResult;
 import com.hdg.entity.User;
-import com.hdg.util.SqlUtil;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
+ *
+ *
+ * 这里的@MapperScan就是Mapper扫描器中所需要的配置，会自动生成代理对象。
+ * 注意，接口中的方法名称要和对应的MyBatis映射文件中的语句的id值一样，因为生成的
+ * 动态代理，会根据这个匹配相应的Sql语句执行。另外就是方法的参数和返回值也需要注
+ * 意。接口中的方法如何定义，对应的MyBatis映射文件就应该进行相应的定义。
+ * 最后，标注中的userDao是用来作为Spring的Bean的id(或name)进行使用的，方便我
+ * 们在Service层进行注入使用。
+ *
  * Created by BlueBuff on 2017/7/10.
  */
-@Repository("userDao")
-public class UserDao extends BaseJdbcDao{
+@Repository
+public class UserDao{
 
+    @Autowired
+    private SqlSessionTemplate sqlSessionTemplate;
 
-    public QueryResult<List<User>> selUser(User user) {
-        StringBuffer stringBuffer=new StringBuffer("select * from t_user ");
-        Map<String,Object> map=new HashMap<>();
-        if(user!=null){
-            if(user.getUserName()!=null){
-                map.put("userName",user.getUserName());
-            }
-            if(user.getPassword()!=null){
-                map.put("password",user.getPassword());
-            }
-        }
-        Object[] obj=SqlUtil.appendQueryParamSqlSupport(stringBuffer,map,true);
-        List<User> userList=jdbcTemplateRead.query(stringBuffer.toString(),obj, BeanPropertyRowMapper.newInstance(User.class));
-        QueryResult queryResult=new QueryResult();
-        queryResult.setCount(userList.size());
-        queryResult.setData(userList);
-        return queryResult;
+    public List<User> selUser(User user){
+        return sqlSessionTemplate.selectList(this.getClass().getName()+".selUser",user);
     }
 
     public int modifyUser(User user){
-        StringBuffer stringBuffer=new StringBuffer(" update t_user set updatetime = now()");
-        Map<String,Object> updateMap=new HashMap<>();
-        if(user.getUserName()!=null){
-            updateMap.put("userName",user.getUserName());
-        }
-        if(user.getPassword()!=null){
-            updateMap.put("password",user.getPassword());
-        }
-        if(user.getOnlineAddress()!=null){
-            updateMap.put("onlineaddress",user.getOnlineAddress());
-        }
-        Object[] obj = SqlUtil.appendUpdateSqlSupport(stringBuffer,updateMap,false);
-        stringBuffer.append(" where t_user.uid = ");
-        stringBuffer.append(user.getUid());
-        int flag=0;
-        try {
-            flag=jdbcTemplateWrite.update(stringBuffer.toString(),obj);
-        }catch (DataAccessException e){
-            e.printStackTrace();
-        }
-        return flag;
+        return sqlSessionTemplate.update(this.getClass().getName()+".modifyUser",user);
     }
 }
