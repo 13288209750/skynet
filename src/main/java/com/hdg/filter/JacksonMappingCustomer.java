@@ -1,5 +1,6 @@
 package com.hdg.filter;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +25,7 @@ public class JacksonMappingCustomer extends ObjectMapper {
 		this.configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS, false);
 
 		this.configure(JsonGenerator.Feature.QUOTE_NON_NUMERIC_NUMBERS, true);
+		//this.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 		// 空值处理为空串
 		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
 			@Override

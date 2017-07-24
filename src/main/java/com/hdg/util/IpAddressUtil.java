@@ -23,6 +23,13 @@ import java.util.Set;
  */
 public class IpAddressUtil {
 
+
+    public IpAddressUtil(){
+        if(logger.isInfoEnabled()){
+            logger.info("ip工具类");
+        }
+    }
+
     private BasicService basicService;
 
     private static Logger logger= LoggerFactory.getLogger(IpAddressUtil.class);

@@ -66,6 +66,11 @@ public class LoginFilter implements Filter {
             User adminUser = (User) (session == null ? null : session.getAttribute(ConfigUtil.getConfigInfo("ADMIN_NAME")));
             User user = (User) (session == null ? null : session.getAttribute(ConfigUtil.getConfigInfo("USER_NAME")));
             if (adminUser == null && user == null) {
+                session = request.getSession();
+                if(StringUtils.isNotBlank(request.getQueryString())){
+                    requestURI = requestURI+"?"+request.getQueryString();
+                }
+                session.setAttribute("temp_url",requestURI);
                 request.getRequestDispatcher("/index/tologin").forward(request, response);
             } else {
                 //一次请求发送临时通行证

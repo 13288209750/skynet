@@ -107,9 +107,11 @@
                         if(data.code==200){
                             //成功
                             window.location.href='/index/tohome';
-                        }else if(data.code==100){
+                        }else if(data.code==201){
+                            window.location.href=data.msg;
+                        } else if(data.code==100){
                             alert(data.msg);
-                            $("#code_div").show('slow');
+                            $("#code_div").show('fast');
                         }else if(data.code==101){
                             alert(data.msg);
                             reloadCode();
