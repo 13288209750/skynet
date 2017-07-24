@@ -324,6 +324,7 @@
               </connector>
             </connectors>
             <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
+            <jettyEnvXml>${project.basedir}/src/main/resources/jetty-env.xml</jettyEnvXml>
             <contextPath>/</contextPath>
           </configuration>
         </plugin>

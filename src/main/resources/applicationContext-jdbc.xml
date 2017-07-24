@@ -3,49 +3,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 数据访问层配置 -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="ignoreUnresolvablePlaceholders" value="true"/>
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc.properties</value>
-            </list>
-        </property>
-    </bean>
-
-    <!--数据源公共属性 -->
-    <bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="maxActive" value="100"></property>
-        <property name="initialSize" value="10"></property>
-        <property name="minIdle" value="5" ></property>
-        <property name="maxIdle" value="20"></property>
-        <property name="maxWait" value="1000" ></property>
-    </bean>
-
-    <bean id="dataSourceWrite" parent="parentDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${write.jdbc.url}" />
-        <property name="username" value="${write.jdbc.username}" />
-        <property name="password" value="${write.jdbc.password}" />
-    </bean>
-
-    <bean id="dataSourceRead" parent="parentDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${read.jdbc.url}" />
-        <property name="username" value="${read.jdbc.username}" />
-        <property name="password" value="${read.jdbc.password}" />
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="${jndi.mysql}"/>
     </bean>
 
     <!-- jdbcTemplate注入 -->
     <bean id="jdbcTemplateWrite" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource">
-            <ref bean="dataSourceWrite"></ref>
+            <ref bean="dataSource"></ref>
         </property>
     </bean>
     <!-- jdbcTemplate读注入 -->
     <bean id="jdbcTemplateRead" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource">
-            <ref bean="dataSourceRead"></ref>
+            <ref bean="dataSource"></ref>
         </property>
     </bean>
 </beans>
