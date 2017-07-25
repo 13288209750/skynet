@@ -1,11 +1,11 @@
 package com.hdg.util;
 
-import com.hdg.entity.User;
+import com.hdg.entity.login.User;
 import com.hdg.exception.SerializableFormatException;
 import com.hdg.exception.SerializableParseException;
 import com.hdg.test.BaseTest;
-import com.hdg.util.ISerializableUtil;
-import com.hdg.util.SerializbleByJson;
+import com.hdg.util.serializable.impl.SerializbleByJson;
+import com.hdg.util.serializable.ISerializableUtil;
 import org.junit.Before;
 import org.junit.Test;
 

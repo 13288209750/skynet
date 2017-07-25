@@ -1,6 +1,6 @@
 package com.hdg.util;
 
-import com.hdg.entity.IpAddress;
+import com.hdg.entity.basic.IpAddress;
 import com.hdg.test.BaseTest;
 import org.junit.Test;
 

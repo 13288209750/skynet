@@ -32,16 +32,16 @@
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
     <!--序列化工具类SerializableByMapper-->
-    <bean id="serializableByMapper" class="com.hdg.util.SerializableByMapper">
+    <bean id="serializableByMapper" class="com.hdg.util.serializable.impl.SerializableByMapper">
         <property name="objectMapper" ref="objectMapper"></property>
         <property name="serializationInclusion" value="NON_EMPTY"></property>
     </bean>
     <!--序列化工具类serializbleByJson-->
-    <bean id="serializbleByJson" class="com.hdg.util.SerializbleByJson"></bean>
+    <bean id="serializbleByJson" class="com.hdg.util.serializable.impl.SerializbleByJson"></bean>
     <!--序列化工具类serializableByStream-->
-    <bean id="serializableByStream" class="com.hdg.util.SerializableByStream"></bean>
+    <bean id="serializableByStream" class="com.hdg.util.serializable.impl.SerializableByStream"></bean>
     <!--ip工具类-->
-    <bean id="ipAddress" class="com.hdg.util.IpAddressUtil">
-        <property name="basicService" ref="basicService"></property>
+    <bean id="ipAddress" class="com.hdg.util.other.IpAddressUtil">
+        <property name="basicService" ref="basicServiceImpl"></property>
     </bean>
 </beans>

@@ -1,14 +1,7 @@
 package com.hdg.filter;
 
-import com.hdg.entity.User;
-import com.hdg.other.Constant;
-import com.hdg.util.ConfigUtil;
-import com.hdg.util.StreamUtil;
-import com.hdg.util.XMLUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
+import com.hdg.entity.login.User;
+import com.hdg.util.other.ConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

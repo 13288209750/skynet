@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * 数据库dao基类
+ * 数据库dao基类(已废弃)
  * Created by BlueBuff on 2017/7/10.
  */
+@Deprecated
 public class BaseJdbcDao {
 
     @Autowired

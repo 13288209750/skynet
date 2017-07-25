@@ -1,13 +1,13 @@
 package com.hdg.aspect;
 
 import com.hdg.annotation.IpAspectAnnotation;
-import com.hdg.entity.IpAddress;
-import com.hdg.entity.Result;
+import com.hdg.entity.basic.IpAddress;
+import com.hdg.entity.result.Result;
 import com.hdg.other.Constant;
-import com.hdg.util.AspectSupportAdapter;
-import com.hdg.util.AspectTemplateUtil;
-import com.hdg.util.ConfigUtil;
-import com.hdg.util.IpAddressUtil;
+import com.hdg.util.aspect.AspectSupportAdapter;
+import com.hdg.util.aspect.AspectTemplateUtil;
+import com.hdg.util.other.ConfigUtil;
+import com.hdg.util.other.IpAddressUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -5,6 +5,6 @@
         <url>/index/tologin</url>
         <url>/index/toregister</url>
         <url>/login/tohome</url>
-        <url>/basic/getImgCode</url>
+        <url>/basic</url>
     </urls>
 </allow-url>
