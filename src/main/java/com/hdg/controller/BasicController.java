@@ -16,6 +16,7 @@ import com.hdg.service.BasicService;
 import com.hdg.util.other.ConfigUtil;
 import com.hdg.util.excel.ExcelCreateArtifactSupport;
 import com.hdg.util.excel.IExcelCreateArtifact;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,14 @@ public class BasicController {
         }
         ExecuteResult<QueryResult<List<IpAddress>>> executeResult=basicService.queryIpAddress(pageParam);
         return new Result(executeResult.getCode(),executeResult.getObj(),executeResult.getMsg());
+    }
+
+    @RequestMapping(value = "/sendCode")
+    @ResponseBody
+    public Result sendCode(){
+        String mobile="13288209750";
+        ExecuteResult<JSONObject> result=basicService.sendCode(mobile);
+        return new Result(result.getCode(),result.getObj(),"success");
     }
 
     @RequestMapping(value = "/export")

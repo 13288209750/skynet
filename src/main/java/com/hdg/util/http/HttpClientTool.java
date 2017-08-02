@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.*;
 
 
 public class HttpClientTool {
@@ -92,6 +93,9 @@ public class HttpClientTool {
 
 	}
 
+	public static String doCustomPost(String url,CallBackHttp callBackHttp){
+		return postSupport(url,callBackHttp);
+	}
 
 	/**
 	 * post同步请求数据,大数据请求，基于流
@@ -99,29 +103,39 @@ public class HttpClientTool {
 	 * @param data
 	 * @return
 	 */
-	public static String doBigPost(String url, NameValuePair[] data) {
+	public static String doBigPost(String url, final NameValuePair[] data) {
+		return postSupport(url, new CallBackHttp() {
+			@Override
+			public void setRequestParam(Set<NameValuePair> set) {
+				set.addAll(Arrays.asList(data));
+			}
 
+			@Override
+			public void setRequestHeader(PostMethod method) {
+
+			}
+		});
+	}
+
+	private static String postSupport(String url,CallBackHttp callBackHttp){
 		String response = "";
 		PostMethod method = null;
 		try {
 			HttpClient client = new HttpClient();
 			client.getHttpConnectionManager().getParams().setConnectionTimeout(60000);// 请求超时
 			method = new PostMethod(url);
+			callBackHttp.setRequestHeader(method);
 			method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "utf-8");
-			method.setRequestBody(data);
+			Set<NameValuePair> nameValuePairs=new HashSet<>();
+			callBackHttp.setRequestParam(nameValuePairs);
+			method.setRequestBody(nameValuePairs.toArray(new NameValuePair[]{}));
 			client.executeMethod(method);
-
 			BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
-
 			StringBuffer stringBuffer = new StringBuffer();
-
 			String str = "";
-
 			while((str = reader.readLine())!=null){
-
 				stringBuffer.append(str);
 			}
-
 			response= stringBuffer.toString();
 		} catch (URIException e) {
 			e.printStackTrace();
@@ -133,7 +147,11 @@ public class HttpClientTool {
 			method.releaseConnection();
 		}
 		return response;
-
 	}
-	 
+
+	public interface CallBackHttp{
+		void setRequestParam(Set<NameValuePair> set);
+
+		void setRequestHeader(PostMethod method);
+	}
 }

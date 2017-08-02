@@ -28,7 +28,7 @@
         <!--它表示我们的Mapper文件存放的位置，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。-->
         <property name="mapperLocations">
             <list>
-                <value>classpath:com/hdg/entity/*/*.xml</value>
+                <value>classpath:mapping/*.xml</value>
             </list>
         </property>
     </bean>

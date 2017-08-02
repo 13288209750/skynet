@@ -5,6 +5,7 @@
         <url>/index/tologin</url>
         <url>/index/toregister</url>
         <url>/login/tohome</url>
-        <url>/basic</url>
+        <url>/basic/</url>
+        <url>/test/</url>
     </urls>
 </allow-url>

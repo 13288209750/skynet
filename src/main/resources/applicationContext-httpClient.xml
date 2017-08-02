@@ -40,7 +40,8 @@
 	<bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
 
 	<!--httpClientFactory配置 -->
-	<bean id="httpClientFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+	<bean id="httpClientFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<property name="httpClient" ref="httpClient"></property>
 		<property name="connectTimeout" value="30000"/>
 		<property name="readTimeout" value="60000"/>
 	</bean>
